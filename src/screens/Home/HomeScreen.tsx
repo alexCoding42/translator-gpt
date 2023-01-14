@@ -5,9 +5,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import React, { useState } from 'react';
+import axios from 'axios';
 import LanguageSwitcher from '../../components/organisms';
 import Card from '../../components/molecules';
 import { CardType } from '../../components/molecules/card/Card';
+import { API_ENDPOINT, API_KEY } from '../../constants';
 
 enum Language {
   thai_en = 'Thai',
@@ -29,21 +31,22 @@ export default function HomeScreen() {
   const [placeholder, setPlaceholder] = useState(Placeholder.english);
   const [isLoading, setIsLoading] = useState(false);
 
-  function submitTranslation() {
+  async function submitTranslation() {
+    setTranslatedText('');
     if (textToTranslate === '') {
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setTranslatedText(
-        'Translation is working properly, API can be handled now'
-      );
-      setIsLoading(false);
-    }, 3000);
+    await callChatGPTAPI(textToTranslate, API_KEY)
+      .then((response) => setTranslatedText(response))
+      .catch((error) => console.error(error));
+
+    setIsLoading(false);
   }
 
   function switchLanguage() {
+    deleteTranslation();
     if (translatingLang === Language.english_en) {
       setTranslatingLang(Language.thai_en);
       setTranslatedLang(Language.english_en);
@@ -58,6 +61,34 @@ export default function HomeScreen() {
   function deleteTranslation() {
     setTextToTranslate('');
     setTranslatedText('');
+  }
+
+  async function callChatGPTAPI(prompt: string, apiKey: string) {
+    const response = await axios.post(
+      API_ENDPOINT,
+      {
+        model: 'text-davinci-003',
+        prompt:
+          translatedLang === Language.thai_en
+            ? `Translate this into ${translatedLang} and romanized thai: ${prompt}`
+            : `Translate this into ${translatedLang}: ${prompt}`,
+        temperature: 0.3,
+        max_tokens: 100,
+        top_p: 1.0,
+        frequency_penalty: 0.0,
+        presence_penalty: 0.0,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+      }
+    );
+    if (response.status !== 200) {
+      throw new Error(response.data.message);
+    }
+    return response.data?.choices[0]?.text.replace(/\n\n/g, '');
   }
 
   return (
