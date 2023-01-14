@@ -1,24 +1,28 @@
 import {
   StyleSheet,
   View,
-  Text,
   Platform,
   TouchableOpacity,
+  ImageSourcePropType,
 } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { LanguageSelector } from '../../atoms';
+import { LanguageSelector } from '../../molecules';
 
 interface LanguageSwitcherProps {
   lang1: string;
   lang2: string;
+  flag1: ImageSourcePropType | undefined;
+  flag2: ImageSourcePropType | undefined;
   switchLanguage: () => void;
 }
 
 const LanguageSwitcher = ({
   lang1,
   lang2,
+  flag1,
+  flag2,
   switchLanguage,
 }: LanguageSwitcherProps) => {
   return (
@@ -29,11 +33,11 @@ const LanguageSwitcher = ({
       style={styles.root}
     >
       <View style={styles.container}>
-        <LanguageSelector text={lang1} />
+        <LanguageSelector text={lang1} flag={flag1} />
         <TouchableOpacity onPress={switchLanguage}>
           <Ionicons name='swap-horizontal' size={20} color='#fff' />
         </TouchableOpacity>
-        <LanguageSelector text={lang2} />
+        <LanguageSelector text={lang2} flag={flag2} />
       </View>
     </LinearGradient>
   );

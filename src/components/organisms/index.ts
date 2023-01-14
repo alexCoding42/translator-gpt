@@ -1,1 +1,1 @@
-export { default } from './language-switcher/LanguageSwitcher';
+export { default as LanguageSwitcher } from './language-switcher/LanguageSwitcher';

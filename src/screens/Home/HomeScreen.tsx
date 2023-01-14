@@ -6,10 +6,10 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
-import LanguageSwitcher from '../../components/organisms';
-import Card from '../../components/molecules';
-import { CardType } from '../../components/molecules/card/Card';
 import { API_ENDPOINT, API_KEY } from '../../constants';
+import { Card } from '../../components/molecules';
+import { CardType } from '../../components/molecules/card/Card';
+import { LanguageSwitcher } from '../../components/organisms';
 
 enum Language {
   thai_en = 'Thai',
@@ -28,6 +28,12 @@ export default function HomeScreen() {
   const [translatedText, setTranslatedText] = useState('');
   const [translatingLang, setTranslatingLang] = useState(Language.english_en);
   const [translatedLang, setTranslatedLang] = useState(Language.thai_en);
+  const [translatingFlag, setTranslatingFlag] = useState(
+    require('../../../assets/images/flags/united-kingdom.png')
+  );
+  const [translatedFlag, setTranslatedFlag] = useState(
+    require('../../../assets/images/flags/thailand.png')
+  );
   const [placeholder, setPlaceholder] = useState(Placeholder.english);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,10 +56,18 @@ export default function HomeScreen() {
     if (translatingLang === Language.english_en) {
       setTranslatingLang(Language.thai_en);
       setTranslatedLang(Language.english_en);
+      setTranslatingFlag(require('../../../assets/images/flags/thailand.png'));
+      setTranslatedFlag(
+        require('../../../assets/images/flags/united-kingdom.png')
+      );
       setPlaceholder(Placeholder.thai);
     } else {
       setTranslatingLang(Language.english_en);
       setTranslatedLang(Language.thai_en);
+      setTranslatingFlag(
+        require('../../../assets/images/flags/united-kingdom.png')
+      );
+      setTranslatedFlag(require('../../../assets/images/flags/thailand.png'));
       setPlaceholder(Placeholder.english);
     }
   }
@@ -101,6 +115,8 @@ export default function HomeScreen() {
         <LanguageSwitcher
           lang1={translatingLang}
           lang2={translatedLang}
+          flag1={translatingFlag}
+          flag2={translatedFlag}
           switchLanguage={switchLanguage}
         />
         <Card
