@@ -3,10 +3,12 @@ import {
   Platform,
   KeyboardAvoidingView,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
-import { API_ENDPOINT, API_KEY } from '../../constants';
+import Constants from 'expo-constants';
+
 import { Card } from '../../components/molecules';
 import { CardType } from '../../components/molecules/card/Card';
 import { LanguageSwitcher } from '../../components/organisms';
@@ -23,6 +25,8 @@ enum Placeholder {
   thai = 'พิมพ์บางอย่าง',
 }
 
+const API_ENDPOINT = 'https://api.openai.com/v1/completions';
+
 export default function HomeScreen() {
   const [textToTranslate, setTextToTranslate] = useState('');
   const [translatedText, setTranslatedText] = useState('');
@@ -37,6 +41,8 @@ export default function HomeScreen() {
   const [placeholder, setPlaceholder] = useState(Placeholder.english);
   const [isLoading, setIsLoading] = useState(false);
 
+  let apiKey = Constants?.expoConfig?.extra?.apiKey;
+
   async function submitTranslation() {
     setTranslatedText('');
     if (textToTranslate === '') {
@@ -44,9 +50,15 @@ export default function HomeScreen() {
     }
 
     setIsLoading(true);
-    await callChatGPTAPI(textToTranslate, API_KEY)
+    await callChatGPTAPI(textToTranslate, apiKey)
       .then((response) => setTranslatedText(response))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        Alert.alert(
+          'Error',
+          `An error occurred when submitting translation. Try again later or contact the support.`
+        );
+        console.error(error);
+      });
 
     setIsLoading(false);
   }

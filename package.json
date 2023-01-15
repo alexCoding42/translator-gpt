@@ -12,6 +12,7 @@
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
     "axios": "^1.2.2",
+    "dotenv": "^16.0.3",
     "expo": "~47.0.12",
     "expo-dev-client": "~2.0.1",
     "expo-linear-gradient": "~12.0.1",
