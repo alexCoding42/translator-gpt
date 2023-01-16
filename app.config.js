@@ -24,6 +24,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.alexandrecisse.translatorGpt',
+      buildNumber: '1.0.0',
     },
     android: {
       adaptiveIcon: {
@@ -31,6 +32,7 @@ export default {
         backgroundColor: '#FFFFFF',
       },
       package: 'com.alexandrecisse.translatorGpt',
+      versionCode: 1,
     },
     web: {
       favicon: './assets/favicon.png',
