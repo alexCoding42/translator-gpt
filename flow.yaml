@@ -1,0 +1,7 @@
+appId: com.alexandrecisse.translatorGpt
+---
+- launchApp
+- tapOn: 'Type something'
+- inputText: 'Hello'
+- pressKey: Enter
+- assertVisible: 'สวัสดี (sà-wàt-dii)'
