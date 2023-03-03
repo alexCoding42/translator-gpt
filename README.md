@@ -14,10 +14,6 @@
 
 Available on App Store and Play Store
 
-## Database
-
-There is no database in this application, the user only calls an API
-
 ## Technical Stack
 
-This project was built using React native and Expo, with EAS builds, Typescript and OpenAI API
+This project was built using React native and Expo, with EAS builds, Typescript and [OpenAI API](https://platform.openai.com/examples/default-translate?lang=node.js)
