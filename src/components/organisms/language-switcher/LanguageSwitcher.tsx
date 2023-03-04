@@ -27,7 +27,7 @@ const LanguageSwitcher = ({
 }: LanguageSwitcherProps) => {
   return (
     <LinearGradient
-      colors={['#4a51d8', '#5f44da']}
+      colors={['#0f0644', '#420084']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.root}

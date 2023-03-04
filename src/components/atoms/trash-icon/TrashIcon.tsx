@@ -9,7 +9,7 @@ interface TrashIconProps {
 const TrashIcon = ({ handleDelete }: TrashIconProps) => {
   return (
     <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={handleDelete}>
-      <Octicons name='trash' size={18} color='#000' />
+      <Octicons name='trash' size={18} color='#fff' />
     </TouchableOpacity>
   );
 };
