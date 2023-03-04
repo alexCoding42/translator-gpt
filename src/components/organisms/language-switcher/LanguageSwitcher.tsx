@@ -11,18 +11,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { LanguageSelector } from '../../molecules';
 
 interface LanguageSwitcherProps {
-  lang1: string;
-  lang2: string;
-  flag1: ImageSourcePropType | undefined;
-  flag2: ImageSourcePropType | undefined;
+  leftLanguage: string;
+  rightLanguage: string;
+  leftFlag: ImageSourcePropType | undefined;
+  rightFlag: ImageSourcePropType | undefined;
   switchLanguage: () => void;
 }
 
 const LanguageSwitcher = ({
-  lang1,
-  lang2,
-  flag1,
-  flag2,
+  leftLanguage,
+  rightLanguage,
+  leftFlag,
+  rightFlag,
   switchLanguage,
 }: LanguageSwitcherProps) => {
   return (
@@ -33,11 +33,11 @@ const LanguageSwitcher = ({
       style={styles.root}
     >
       <View style={styles.container}>
-        <LanguageSelector text={lang1} flag={flag1} />
+        <LanguageSelector text={leftLanguage} flag={leftFlag} />
         <TouchableOpacity onPress={switchLanguage}>
           <Ionicons name='swap-horizontal' size={20} color='#fff' />
         </TouchableOpacity>
-        <LanguageSelector text={lang2} flag={flag2} />
+        <LanguageSelector text={rightLanguage} flag={rightFlag} />
       </View>
     </LinearGradient>
   );
