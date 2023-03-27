@@ -8,7 +8,7 @@ export default {
   expo: {
     name: 'translator-gpt',
     slug: 'translator-gpt',
-    version: '1.0.0',
+    version: '1.1.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
@@ -24,7 +24,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.alexandrecisse.translatorGpt',
-      buildNumber: '1.0.0',
+      buildNumber: '1.1.0',
     },
     android: {
       adaptiveIcon: {
@@ -32,7 +32,7 @@ export default {
         backgroundColor: '#FFFFFF',
       },
       package: 'com.alexandrecisse.translatorGpt',
-      versionCode: 1,
+      versionCode: 2,
     },
     web: {
       favicon: './assets/favicon.png',
