@@ -16,6 +16,8 @@ interface LanguageSwitcherProps {
   leftFlag: ImageSourcePropType | undefined;
   rightFlag: ImageSourcePropType | undefined;
   switchLanguage: () => void;
+  selectLeftLanguage: () => void;
+  selectRightLanguage: () => void;
 }
 
 const LanguageSwitcher = ({
@@ -24,6 +26,8 @@ const LanguageSwitcher = ({
   leftFlag,
   rightFlag,
   switchLanguage,
+  selectLeftLanguage,
+  selectRightLanguage,
 }: LanguageSwitcherProps) => {
   return (
     <LinearGradient
@@ -33,11 +37,19 @@ const LanguageSwitcher = ({
       style={styles.root}
     >
       <View style={styles.container}>
-        <LanguageSelector text={leftLanguage} flag={leftFlag} />
+        <LanguageSelector
+          text={leftLanguage}
+          flag={leftFlag}
+          selectLanguage={selectLeftLanguage}
+        />
         <TouchableOpacity onPress={switchLanguage}>
           <Ionicons name='swap-horizontal' size={20} color='#fff' />
         </TouchableOpacity>
-        <LanguageSelector text={rightLanguage} flag={rightFlag} />
+        <LanguageSelector
+          text={rightLanguage}
+          flag={rightFlag}
+          selectLanguage={selectRightLanguage}
+        />
       </View>
     </LinearGradient>
   );

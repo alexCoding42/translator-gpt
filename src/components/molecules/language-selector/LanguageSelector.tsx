@@ -11,11 +11,16 @@ import { Flag } from '../../atoms';
 interface LanguageSelectorProps {
   text: string;
   flag: ImageSourcePropType | undefined;
+  selectLanguage: () => void;
 }
 
-const LanguageSelector = ({ text, flag }: LanguageSelectorProps) => {
+const LanguageSelector = ({
+  text,
+  flag,
+  selectLanguage,
+}: LanguageSelectorProps) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => {}}>
+    <TouchableOpacity style={styles.container} onPress={selectLanguage}>
       <Flag flag={flag} />
       <Text style={styles.text}>{text}</Text>
       <Entypo color='#fff' name='chevron-small-down' size={20} />

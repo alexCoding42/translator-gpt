@@ -1,7 +1,8 @@
 import { ImageSourcePropType } from 'react-native/types';
 
 export interface Language {
-  id: number;
+  id: string;
+  code: string;
   name: string;
   placeholder: string;
   flag: ImageSourcePropType | undefined;

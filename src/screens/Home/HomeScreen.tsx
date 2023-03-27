@@ -9,16 +9,21 @@ import React, { useState } from 'react';
 
 import { Card } from '../../components/molecules';
 import { CardType } from '../../components/molecules/card/Card';
-import { LanguageSwitcher } from '../../components/organisms';
+import { LanguagePopup, LanguageSwitcher } from '../../components/organisms';
 import { callChatGPTAPI } from '../../webservices';
 import { languages } from '../../data';
+import { Language } from '../../models';
 
 export default function HomeScreen() {
   const [textToTranslate, setTextToTranslate] = useState('');
   const [translatedText, setTranslatedText] = useState('');
-  const [inputLanguage, setInputLanguage] = useState(languages[0]);
-  const [outputLanguage, setOutputLanguage] = useState(languages[1]);
+  const [inputLanguage, setInputLanguage] = useState(languages[1]);
+  const [outputLanguage, setOutputLanguage] = useState(languages[7]);
   const [isLoading, setIsLoading] = useState(false);
+  const [languagePopupType, setLanguagePopupType] = useState<'left' | 'right'>(
+    'left'
+  );
+  const [modalVisible, setModalVisible] = useState(false);
 
   async function submitTranslation() {
     setTranslatedText('');
@@ -50,9 +55,27 @@ export default function HomeScreen() {
     setOutputLanguage(inputLanguage);
   }
 
+  function selectLeftLanguage() {
+    setLanguagePopupType('left');
+    setModalVisible(true);
+  }
+
+  function selectRightLanguage() {
+    setLanguagePopupType('right');
+    setModalVisible(true);
+  }
+
   function deleteTranslation() {
     setTextToTranslate('');
     setTranslatedText('');
+  }
+
+  function handleSelectedLanguage(selectedLanguage: Language) {
+    if (languagePopupType === 'left') {
+      setInputLanguage(selectedLanguage);
+    } else {
+      setOutputLanguage(selectedLanguage);
+    }
   }
 
   return (
@@ -62,12 +85,19 @@ export default function HomeScreen() {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 100}
     >
       <ScrollView contentContainerStyle={styles.scrollView}>
+        <LanguagePopup
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          onSelectLanguage={handleSelectedLanguage}
+        />
         <LanguageSwitcher
           leftLanguage={inputLanguage.name}
           rightLanguage={outputLanguage.name}
           leftFlag={inputLanguage.flag}
           rightFlag={outputLanguage.flag}
           switchLanguage={switchLanguage}
+          selectLeftLanguage={selectLeftLanguage}
+          selectRightLanguage={selectRightLanguage}
         />
         <Card
           type={CardType.editable}
