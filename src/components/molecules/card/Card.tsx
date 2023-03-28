@@ -1,11 +1,12 @@
+import React, { useRef } from 'react';
 import {
   StyleSheet,
   View,
   Dimensions,
   TextInput,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
 import { CardDivider, TrashIcon } from '../../atoms';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -35,6 +36,14 @@ const Card = ({
   showLoadingIndicator = false,
   deleteField,
 }: CardProps) => {
+  const textInputRef = useRef<TextInput>(null);
+
+  const handleCardPress = () => {
+    if (textInputRef.current) {
+      textInputRef.current.focus();
+    }
+  };
+
   return (
     <LinearGradient
       colors={['#0f0644', '#420084']}
@@ -42,33 +51,40 @@ const Card = ({
       end={{ x: 1, y: 1 }}
       style={styles.root}
     >
-      <View style={styles.container}>
-        {showLoadingIndicator ? (
-          <ActivityIndicator
-            style={styles.loadingIndicator}
-            size='large'
-            color='#fff'
-          />
-        ) : (
-          <TextInput
-            autoCapitalize='none'
-            style={styles.textInput}
-            value={textFieldValue}
-            placeholder={placeholder ?? ''}
-            placeholderTextColor='#A0A0A0'
-            multiline={true}
-            blurOnSubmit={true}
-            returnKeyType='go'
-            editable={type === CardType.editable}
-            onChangeText={setTextFieldValue}
-            onSubmitEditing={submit}
-          />
-        )}
-        <CardDivider />
-        {deleteField && textFieldValue && (
-          <TrashIcon handleDelete={deleteField} />
-        )}
-      </View>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={handleCardPress}
+        style={styles.container}
+      >
+        <View style={styles.contentContainer}>
+          {showLoadingIndicator ? (
+            <ActivityIndicator
+              style={styles.loadingIndicator}
+              size='large'
+              color='#fff'
+            />
+          ) : (
+            <TextInput
+              ref={textInputRef}
+              autoCapitalize='none'
+              style={styles.textInput}
+              value={textFieldValue}
+              placeholder={placeholder ?? ''}
+              placeholderTextColor='#A0A0A0'
+              multiline={true}
+              blurOnSubmit={true}
+              returnKeyType='go'
+              editable={type === CardType.editable}
+              onChangeText={setTextFieldValue}
+              onSubmitEditing={submit}
+            />
+          )}
+          <CardDivider />
+          {deleteField && textFieldValue && (
+            <TrashIcon handleDelete={deleteField} />
+          )}
+        </View>
+      </TouchableOpacity>
     </LinearGradient>
   );
 };
@@ -88,6 +104,9 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   container: {
+    flex: 1,
+  },
+  contentContainer: {
     flex: 1,
   },
   loadingIndicator: {
